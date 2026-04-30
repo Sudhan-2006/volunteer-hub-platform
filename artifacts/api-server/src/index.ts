@@ -1,5 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { ensureAdminSeed } from "./lib/auth";
+import { seedDemoData } from "./lib/seed";
 
 const rawPort = process.env["PORT"];
 
@@ -14,6 +16,9 @@ const port = Number(rawPort);
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
+
+await ensureAdminSeed();
+await seedDemoData();
 
 app.listen(port, (err) => {
   if (err) {

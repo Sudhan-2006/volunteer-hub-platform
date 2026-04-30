@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "mR6JSgMcgPubkDfpxfda8"
+uri = "file://artifacts/volunteer-ai/src/assets/hero-community.png"
+type = "image"
+title = "Diverse neighbors helping community"
+
+[[generated]]
+id = "FoNR1EmBF8d8hIHCFHXQm"
+uri = "file://artifacts/volunteer-ai/src/assets/hero-volunteer.png"
+type = "image"
+title = "Medical volunteer helping elder"
+
+[[generated]]
+id = "iwPDhGj4pa2FJUqwNrLWL"
+uri = "file://artifacts/volunteer-ai/src/assets/hero-hands.png"
+type = "image"
+title = "Community hands together"
+
+[[generated]]
+id = "fV4zMqubHgC4Ovnr4TZ8D"
+uri = "file://artifacts/volunteer-ai/src/assets/hero.png"
+type = "image"
+title = "Landing hero image"
+
+[[generated]]
+id = "XtqbyBE4PzZKJDg9_TAhV"
+uri = "file://artifacts/volunteer-ai/src/assets/auth-brand.png"
+type = "image"
+title = "Auth side brand image"

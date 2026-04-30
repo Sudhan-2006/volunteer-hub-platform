@@ -3,20 +3,24 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Volunteer AI API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: auth
+  - name: requests
+  - name: applications
+  - name: volunteers
+  - name: dashboard
+  - name: admin
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +28,904 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new user or volunteer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionUser"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login (user, volunteer, or admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionUser"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout current session
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ok"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Current logged in user
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeResponse"
+
+  /requests:
+    get:
+      operationId: listRequests
+      tags: [requests]
+      summary: List requests visible to current role
+      parameters:
+        - in: query
+          name: scope
+          schema:
+            type: string
+            enum: [mine, available, all]
+          description: mine=user's own; available=open feed for volunteers; all=admin
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpRequest"
+    post:
+      operationId: createRequest
+      tags: [requests]
+      summary: User creates a new help request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRequestBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpRequest"
+
+  /requests/{id}:
+    get:
+      operationId: getRequest
+      tags: [requests]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelpRequestDetail"
+
+  /requests/{id}/applications:
+    get:
+      operationId: getRequestApplications
+      tags: [applications]
+      summary: List volunteers who applied to this request
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApplicationWithVolunteer"
+
+  /applications:
+    get:
+      operationId: listApplications
+      tags: [applications]
+      summary: List applications visible to current role
+      parameters:
+        - in: query
+          name: scope
+          schema:
+            type: string
+            enum: [mine, all]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApplicationWithRequest"
+    post:
+      operationId: applyToRequest
+      tags: [applications]
+      summary: Volunteer applies to a request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplyBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /applications/{id}/decision:
+    post:
+      operationId: decideApplication
+      tags: [applications]
+      summary: User approves or rejects a volunteer application
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DecisionBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /volunteers/profile:
+    get:
+      operationId: getMyVolunteerProfile
+      tags: [volunteers]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VolunteerProfile"
+    put:
+      operationId: updateVolunteerProfile
+      tags: [volunteers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpsertVolunteerProfileBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VolunteerProfile"
+
+  /volunteers:
+    get:
+      operationId: listVolunteers
+      tags: [volunteers]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VolunteerProfile"
+
+  /dashboard/user:
+    get:
+      operationId: getUserDashboard
+      tags: [dashboard]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDashboard"
+
+  /dashboard/volunteer:
+    get:
+      operationId: getVolunteerDashboard
+      tags: [dashboard]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VolunteerDashboard"
+
+  /dashboard/admin:
+    get:
+      operationId: getAdminDashboard
+      tags: [dashboard]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDashboard"
+
+  /admin/users:
+    get:
+      operationId: adminListUsers
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminUserRow"
+
+  /admin/volunteers:
+    get:
+      operationId: adminListVolunteers
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminVolunteerRow"
+
+  /admin/users/{id}:
+    get:
+      operationId: adminGetUser
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUserDetail"
+
+  /admin/volunteers/{id}:
+    get:
+      operationId: adminGetVolunteer
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminVolunteerDetail"
+
+  /admin/activity:
+    get:
+      operationId: adminRecentActivity
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
 components:
   schemas:
+    Ok:
+      type: object
+      properties:
+        ok:
+          type: boolean
+      required: [ok]
     HealthStatus:
       type: object
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Role:
+      type: string
+      enum: [user, volunteer, admin]
+
+    RegisterBody:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 3
+        password:
+          type: string
+          minLength: 4
+        role:
+          type: string
+          enum: [user, volunteer]
+      required: [name, email, password, role]
+
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required: [email, password]
+
+    SessionUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/Role"
+        hasVolunteerProfile:
+          type: boolean
+      required: [id, name, email, role, hasVolunteerProfile]
+
+    MeResponse:
+      type: object
+      properties:
+        user:
+          oneOf:
+            - $ref: "#/components/schemas/SessionUser"
+            - type: "null"
+      required: [user]
+
+    RequestStatus:
+      type: string
+      enum: [open, in_progress, completed, cancelled]
+
+    Urgency:
+      type: string
+      enum: [low, medium, high]
+
+    HelpRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        userName:
+          type: string
+        title:
+          type: string
+        purpose:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        urgency:
+          $ref: "#/components/schemas/Urgency"
+        cityArea:
+          type: string
+        location:
+          type: string
+          nullable: true
+          description: Only revealed to approved volunteer and the owner
+        contactPhone:
+          type: string
+          nullable: true
+          description: Only revealed to approved volunteer and the owner
+        status:
+          $ref: "#/components/schemas/RequestStatus"
+        applicationsCount:
+          type: integer
+        approvedVolunteerId:
+          type: integer
+          nullable: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - userId
+        - userName
+        - title
+        - purpose
+        - category
+        - description
+        - urgency
+        - cityArea
+        - status
+        - applicationsCount
+        - createdAt
+
+    CreateRequestBody:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+        purpose:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        urgency:
+          $ref: "#/components/schemas/Urgency"
+        cityArea:
+          type: string
+          minLength: 1
+        location:
+          type: string
+          minLength: 1
+        contactPhone:
+          type: string
+          minLength: 1
+      required:
+        - title
+        - purpose
+        - category
+        - description
+        - urgency
+        - cityArea
+        - location
+        - contactPhone
+
+    HelpRequestDetail:
+      allOf:
+        - $ref: "#/components/schemas/HelpRequest"
+        - type: object
+          properties:
+            applications:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApplicationWithVolunteer"
+          required: [applications]
+
+    ApplicationStatus:
+      type: string
+      enum: [pending, approved, rejected, withdrawn]
+
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+        requestId:
+          type: integer
+        volunteerId:
+          type: integer
+        message:
+          type: string
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        createdAt:
+          type: string
+        decidedAt:
+          type: string
+          nullable: true
+      required: [id, requestId, volunteerId, message, status, createdAt]
+
+    ApplicationWithVolunteer:
+      type: object
+      properties:
+        id:
+          type: integer
+        requestId:
+          type: integer
+        message:
+          type: string
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        createdAt:
+          type: string
+        volunteer:
+          $ref: "#/components/schemas/VolunteerProfile"
+      required: [id, requestId, message, status, createdAt, volunteer]
+
+    ApplicationWithRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        message:
+          type: string
+        status:
+          $ref: "#/components/schemas/ApplicationStatus"
+        createdAt:
+          type: string
+        request:
+          $ref: "#/components/schemas/HelpRequest"
+      required: [id, message, status, createdAt, request]
+
+    ApplyBody:
+      type: object
+      properties:
+        requestId:
+          type: integer
+        message:
+          type: string
+          minLength: 1
+      required: [requestId, message]
+
+    DecisionBody:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum: [approved, rejected]
+      required: [decision]
+
+    VolunteerProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        roleTitle:
+          type: string
+          description: e.g. "Medical Helper", "Tutor"
+        skills:
+          type: array
+          items:
+            type: string
+        bio:
+          type: string
+        phone:
+          type: string
+        cityArea:
+          type: string
+        availability:
+          type: string
+        experienceYears:
+          type: integer
+        rating:
+          type: number
+        completedHelps:
+          type: integer
+      required:
+        - id
+        - userId
+        - name
+        - email
+        - roleTitle
+        - skills
+        - bio
+        - phone
+        - cityArea
+        - availability
+        - experienceYears
+        - rating
+        - completedHelps
+
+    UpsertVolunteerProfileBody:
+      type: object
+      properties:
+        roleTitle:
+          type: string
+          minLength: 1
+        skills:
+          type: array
+          items:
+            type: string
+        bio:
+          type: string
+        phone:
+          type: string
+          minLength: 1
+        cityArea:
+          type: string
+          minLength: 1
+        availability:
+          type: string
+          minLength: 1
+        experienceYears:
+          type: integer
+          minimum: 0
+      required: [roleTitle, skills, bio, phone, cityArea, availability, experienceYears]
+
+    DashboardCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+        applied:
+          type: integer
+        pending:
+          type: integer
+        accepted:
+          type: integer
+        rejected:
+          type: integer
+      required: [total, applied, pending, accepted, rejected]
+
+    UserDashboard:
+      type: object
+      properties:
+        counts:
+          $ref: "#/components/schemas/DashboardCounts"
+        recentRequests:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpRequest"
+        recentApplications:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApplicationWithVolunteer"
+      required: [counts, recentRequests, recentApplications]
+
+    VolunteerDashboard:
+      type: object
+      properties:
+        counts:
+          type: object
+          properties:
+            activeRoles:
+              type: integer
+            applications:
+              type: integer
+            accepted:
+              type: integer
+            rejected:
+              type: integer
+            availableRequests:
+              type: integer
+          required: [activeRoles, applications, accepted, rejected, availableRequests]
+        recentApplications:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApplicationWithRequest"
+        availableRequests:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpRequest"
+        profile:
+          oneOf:
+            - $ref: "#/components/schemas/VolunteerProfile"
+            - type: "null"
+      required: [counts, recentApplications, availableRequests, profile]
+
+    AdminDashboard:
+      type: object
+      properties:
+        totals:
+          type: object
+          properties:
+            users:
+              type: integer
+            volunteers:
+              type: integer
+            requests:
+              type: integer
+            applications:
+              type: integer
+            approvedHelps:
+              type: integer
+          required: [users, volunteers, requests, applications, approvedHelps]
+        requestStatusBreakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              count:
+                type: integer
+            required: [status, count]
+        applicationStatusBreakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              count:
+                type: integer
+            required: [status, count]
+        categoryBreakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+              count:
+                type: integer
+            required: [category, count]
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+        topVolunteers:
+          type: array
+          items:
+            $ref: "#/components/schemas/VolunteerProfile"
+      required:
+        - totals
+        - requestStatusBreakdown
+        - applicationStatusBreakdown
+        - categoryBreakdown
+        - recentActivity
+        - topVolunteers
+
+    AdminUserRow:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+        totalRequests:
+          type: integer
+        openRequests:
+          type: integer
+        completedRequests:
+          type: integer
+      required: [id, name, email, createdAt, totalRequests, openRequests, completedRequests]
+
+    AdminVolunteerRow:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        roleTitle:
+          type: string
+        cityArea:
+          type: string
+        totalApplications:
+          type: integer
+        approved:
+          type: integer
+        rejected:
+          type: integer
+        pending:
+          type: integer
+      required:
+        - id
+        - userId
+        - name
+        - email
+        - roleTitle
+        - cityArea
+        - totalApplications
+        - approved
+        - rejected
+        - pending
+
+    AdminUserDetail:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/AdminUserRow"
+        requests:
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpRequest"
+      required: [user, requests]
+
+    AdminVolunteerDetail:
+      type: object
+      properties:
+        volunteer:
+          $ref: "#/components/schemas/AdminVolunteerRow"
+        profile:
+          $ref: "#/components/schemas/VolunteerProfile"
+        applications:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApplicationWithRequest"
+      required: [volunteer, profile, applications]
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum: [request_created, application_created, application_decided, user_registered, volunteer_registered]
+        message:
+          type: string
+        actorName:
+          type: string
+        createdAt:
+          type: string
+      required: [id, kind, message, actorName, createdAt]
