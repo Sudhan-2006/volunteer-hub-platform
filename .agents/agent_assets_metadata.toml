@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "mR6JSgMcgPubkDfpxfda8"
@@ -30,3 +29,9 @@ id = "XtqbyBE4PzZKJDg9_TAhV"
 uri = "file://artifacts/volunteer-ai/src/assets/auth-brand.png"
 type = "image"
 title = "Auth side brand image"
+
+[[outputs]]
+id = "mVszeRtdBztfg2nastGRG"
+uri = "file://volunteer-ai-project.zip"
+type = "unspecified"
+title = "Volunteer AI — Full Project Source"
