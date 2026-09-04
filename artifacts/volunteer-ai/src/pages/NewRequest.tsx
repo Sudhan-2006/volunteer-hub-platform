@@ -58,19 +58,19 @@ export default function NewRequest() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/dashboard/user" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:py-10">
+      <Link href="/dashboard/user" className="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Dashboard
       </Link>
       
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Post a Request</h1>
+        <span className="label-mono text-[#9A6800]">ask your neighborhood</span><h1 className="mt-2 text-3xl font-bold tracking-tight">Post a request</h1>
         <p className="text-muted-foreground mt-2">Describe what you need help with to connect with local volunteers.</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        <div className="space-y-6 bg-card p-6 sm:p-8 rounded-xl border shadow-sm">
+        <div className="surface-shadow space-y-6 rounded-2xl border border-border/80 bg-card p-6 sm:p-8">
           <div className="space-y-2">
             <Label htmlFor="title">Short Title</Label>
             <Input id="title" placeholder="e.g. Need help with groceries delivery" {...register("title")} className={errors.title ? "border-destructive" : ""} />
@@ -134,12 +134,12 @@ export default function NewRequest() {
           </div>
         </div>
 
-        <div className="space-y-6 bg-card p-6 sm:p-8 rounded-xl border shadow-sm">
+        <div className="surface-shadow space-y-6 rounded-2xl border border-border/80 bg-card p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-2">
             <h3 className="text-lg font-semibold">Location & Contact</h3>
           </div>
           
-          <Card className="bg-amber-50/50 border-amber-200 shadow-none mb-6">
+          <Card className="mb-6 border-[#F9AB00]/25 bg-[#F9AB00]/[.08] shadow-none">
             <CardContent className="p-4 flex gap-3 text-amber-800">
               <ShieldAlert className="w-5 h-5 shrink-0 mt-0.5" />
               <p className="text-sm">
@@ -173,7 +173,7 @@ export default function NewRequest() {
           <Link href="/dashboard/user">
             <Button type="button" variant="outline">Cancel</Button>
           </Link>
-          <Button type="submit" className="bg-amber-600 hover:bg-amber-700 text-white min-w-[150px]" disabled={createRequest.isPending}>
+          <Button type="submit" className="min-w-[150px] bg-[#F9AB00] text-[#1E1E1E] hover:bg-[#F9AB00]/90" disabled={createRequest.isPending}>
             {createRequest.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Post Request
           </Button>

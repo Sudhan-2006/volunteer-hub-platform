@@ -19,8 +19,8 @@ export default function UserRequestDetail({ id }: { id: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] items-center justify-center p-8">
+        <div className="h-10 w-10 animate-pulse rounded-xl bg-primary/15" />
       </div>
     );
   }
@@ -46,14 +46,14 @@ export default function UserRequestDetail({ id }: { id: number }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl space-y-8">
+    <div className="mx-auto max-w-5xl space-y-9 px-4 py-8 sm:px-6 lg:py-10">
       <Link href="/dashboard/user" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Dashboard
       </Link>
 
-      <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
-        <div className="bg-muted/30 p-6 md:p-8 border-b">
+      <div className="surface-shadow overflow-hidden rounded-2xl border border-border/80 bg-card">
+        <div className="border-b border-border/70 bg-primary/[.045] p-6 md:p-8">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <Badge variant="secondary">{request.category}</Badge>
             <Badge variant="outline" className={
@@ -68,7 +68,7 @@ export default function UserRequestDetail({ id }: { id: number }) {
             </Badge>
           </div>
           
-          <h1 className="text-3xl font-bold mb-2">{request.title}</h1>
+          <h1 className="mb-2 text-3xl font-bold tracking-tight">{request.title}</h1>
           <p className="text-xl text-muted-foreground">{request.purpose}</p>
         </div>
 
@@ -192,7 +192,7 @@ export default function UserRequestDetail({ id }: { id: number }) {
                         {app.status === 'pending' ? (
                           <>
                             <p className="text-sm text-center text-muted-foreground mb-2">Decide on this application</p>
-                            <Button 
+                     <Button data-testid={`button-approve-application-${app.id}`}
                               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
                               onClick={() => handleDecision(app.id, "approved")}
                               disabled={decideApplication.isPending}
@@ -200,7 +200,7 @@ export default function UserRequestDetail({ id }: { id: number }) {
                               {decideApplication.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <CheckCircle2 className="w-4 h-4 mr-2" />}
                               Approve
                             </Button>
-                            <Button 
+                     <Button data-testid={`button-reject-application-${app.id}`}
                               variant="outline" 
                               className="w-full text-rose-600 hover:bg-rose-50"
                               onClick={() => handleDecision(app.id, "rejected")}

@@ -19,8 +19,8 @@ export default function VolunteerDashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] max-w-6xl items-center justify-center p-8">
+        <div className="space-y-3 text-center"><div className="mx-auto h-10 w-10 animate-pulse rounded-xl bg-[#34A853]/15" /><p className="label-mono text-muted-foreground">loading your opportunities</p></div>
       </div>
     );
   }
@@ -28,15 +28,15 @@ export default function VolunteerDashboard() {
   if (!dashboard) return null;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl space-y-8">
+    <div className="mx-auto max-w-6xl space-y-9 px-4 py-8 sm:px-6 lg:py-10">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Volunteer Dashboard</h1>
+          <span className="label-mono text-[#21833E]">volunteer space</span><h1 className="mt-2 text-3xl font-bold tracking-tight">Your next good deed</h1>
           <p className="text-muted-foreground mt-1">Find ways to help and track your impact.</p>
         </div>
         {dashboard.profile && (
-          <Link href="/dashboard/volunteer/profile">
-            <Button variant="outline" className="gap-2">
+          <Link href="/dashboard/volunteer/profile" data-testid="link-volunteer-profile">
+              <Button variant="outline" className="gap-2 border-[#34A853]/30 text-[#21833E] hover:bg-[#34A853]/10">
               <Award className="w-4 h-4" /> My Profile
             </Button>
           </Link>
@@ -44,20 +44,20 @@ export default function VolunteerDashboard() {
       </div>
 
       {!dashboard.profile ? (
-        <Card className="bg-teal-50 border-teal-200 shadow-sm overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-teal-500"></div>
+          <Card className="relative overflow-hidden border-[#34A853]/25 bg-[#34A853]/[.07] shadow-sm">
+          <div className="absolute left-0 top-0 h-full w-1 bg-[#34A853]"></div>
           <CardContent className="p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-start gap-4">
-              <div className="bg-teal-100 p-3 rounded-full text-teal-600">
+              <div className="rounded-xl bg-[#34A853]/15 p-3 text-[#21833E]">
                 <ShieldAlert className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-teal-900 mb-1">Complete your volunteer profile</h3>
-                <p className="text-teal-800">You need to set up your profile before you can apply to help with requests. Tell us about your skills and availability.</p>
+                <h3 className="mb-1 text-xl font-semibold text-[#1E1E1E]">Complete your volunteer profile</h3>
+                <p className="text-[#285E39]">You need to set up your profile before you can apply to help with requests. Tell us about your skills and availability.</p>
               </div>
             </div>
             <Link href="/dashboard/volunteer/profile">
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white shrink-0">
+              <Button className="shrink-0 bg-[#34A853] text-white hover:bg-[#21833E]">
                 Set up profile
               </Button>
             </Link>
@@ -65,17 +65,17 @@ export default function VolunteerDashboard() {
         </Card>
       ) : (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <StatCard title="Active Roles" value={dashboard.counts.activeRoles} icon={<Award className="w-5 h-5" />} accentClass="text-teal-600 bg-teal-500/10" delay={0} />
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+            <StatCard title="Active Roles" value={dashboard.counts.activeRoles} icon={<Award className="w-5 h-5" />} accentClass="text-[#21833E] bg-[#34A853]/10" delay={0} />
             <StatCard title="Applications" value={dashboard.counts.applications} icon={<FileText className="w-5 h-5" />} accentClass="text-blue-600 bg-blue-500/10" delay={0.1} />
             <StatCard title="Accepted" value={dashboard.counts.accepted} icon={<CheckCircle2 className="w-5 h-5" />} accentClass="text-emerald-600 bg-emerald-500/10" delay={0.2} />
-            <StatCard title="Rejected" value={dashboard.counts.rejected} icon={<XCircle className="w-5 h-5" />} accentClass="text-rose-600 bg-rose-500/10" delay={0.3} />
-            <StatCard title="Available Requests" value={dashboard.counts.availableRequests} icon={<MapPin className="w-5 h-5" />} accentClass="text-purple-600 bg-purple-500/10" delay={0.4} />
+            <StatCard title="Rejected" value={dashboard.counts.rejected} icon={<XCircle className="w-5 h-5" />} accentClass="text-[#B52D25] bg-[#EA4335]/10" delay={0.3} />
+            <StatCard title="Available Requests" value={dashboard.counts.availableRequests} icon={<MapPin className="w-5 h-5" />} accentClass="text-[#2563C4] bg-[#4285F4]/10" delay={0.4} />
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
-              <h2 className="text-2xl font-semibold tracking-tight">Available Requests</h2>
+               <div><span className="label-mono text-muted-foreground">open nearby</span><h2 className="mt-1 text-xl font-semibold tracking-tight">Available requests</h2></div>
               {dashboard.availableRequests.length === 0 ? (
                 <EmptyState 
                   icon={<MapPin className="w-8 h-8" />}
@@ -97,7 +97,7 @@ export default function VolunteerDashboard() {
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold tracking-tight">My Applications</h2>
+               <div><span className="label-mono text-muted-foreground">your commitments</span><h2 className="mt-1 text-xl font-semibold tracking-tight">My applications</h2></div>
               {dashboard.recentApplications.length === 0 ? (
                 <EmptyState 
                   icon={<FileText className="w-8 h-8" />}
@@ -114,14 +114,14 @@ export default function VolunteerDashboard() {
                       transition={{ delay: i * 0.1 }}
                     >
                       <Link href={`/dashboard/volunteer/requests/${app.request.id}`}>
-                        <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                          <Card className="surface-shadow border-border/80 transition-colors hover:bg-muted/50">
                           <CardContent className="p-4 space-y-3">
                             <div className="flex justify-between items-start gap-2">
                               <h3 className="font-semibold line-clamp-1">{app.request.title}</h3>
-                              <Badge variant="outline" className={
-                                app.status === 'pending' ? 'bg-amber-500/10 text-amber-600' :
-                                app.status === 'approved' ? 'bg-emerald-500/10 text-emerald-600' :
-                                'bg-rose-500/10 text-rose-600'
+                               <Badge data-testid={`status-my-application-${app.id}`} variant="outline" className={
+                                 app.status === 'pending' ? 'bg-[#F9AB00]/12 text-[#946300]' :
+                                 app.status === 'approved' ? 'bg-[#34A853]/10 text-[#21833E]' :
+                                 'bg-[#EA4335]/10 text-[#B52D25]'
                               }>
                                 {app.status}
                               </Badge>

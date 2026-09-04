@@ -1,0 +1,288 @@
+I have an existing fully working project called "Volunteer Hub".
+
+IMPORTANT:
+Do NOT add any new modules, features, database tables, API endpoints, authentication logic, backend functionality, or change any existing business logic.
+
+For this task, ONLY improve the existing UI/UX and visual design based on the Google Developer Groups (GDG) Brand Guidelines provided for this mini hackathon.
+
+GOAL:
+Make the existing Volunteer Hub look modern, professional, polished, community-focused, and visually aligned with the provided GDG Community Kit / Brand Guidelines.
+
+STRICT RULE:
+All existing functionality must continue working exactly as it does now.
+Do not remove, rename, break, or rewrite existing functionality.
+Do not change database schemas.
+Do not change API behavior.
+Do not change authentication or authorization.
+Do not change routing behavior unless absolutely necessary for visual navigation.
+Only modify frontend presentation and styling.
+
+DESIGN REQUIREMENTS:
+
+1. GDG COLOR SYSTEM
+Use the provided GDG-inspired core color palette consistently:
+
+Blue 500: #4285F4
+Green 500: #34A853
+Yellow 600: #F9AB00
+Red 500: #EA4335
+Black 02: #1E1E1E
+Off White: #F0F0F0
+
+Use these colors thoughtfully rather than making the entire UI multicolored.
+Use blue as the primary accent and use green, yellow, and red as secondary accents for status, highlights, badges, buttons, and visual elements where appropriate.
+
+2. TYPOGRAPHY
+Update the frontend typography to have a Google Sans-inspired clean modern appearance.
+
+Use:
+- Google Sans or the closest legally available web-safe/system alternative for headings and primary UI text.
+- Google Sans Mono or a suitable monospace alternative for small labels, metadata, status indicators, technical information, and data-style elements.
+
+Use a combination of regular and bold weights.
+Keep typography clean, readable, and not oversized.
+
+3. OVERALL VISUAL STYLE
+Transform the current Volunteer Hub into a polished community platform.
+
+Design direction:
+- Modern
+- Clean
+- Friendly
+- Technology/community oriented
+- Professional
+- Minimal but visually attractive
+- Strong visual hierarchy
+- Rounded cards where appropriate
+- Clean spacing
+- Subtle shadows
+- Professional hover states
+- Smooth transitions
+- Consistent border radius
+- Good contrast
+- Responsive on desktop, tablet, and mobile
+
+Avoid excessive gradients, excessive glassmorphism, excessive animations, or flashy effects.
+
+4. NAVBAR / HEADER
+Redesign the existing navbar/header.
+
+Keep all existing navigation items and functionality.
+
+Improve:
+- Logo placement
+- Project title
+- Navigation spacing
+- Active navigation state
+- User/profile area
+- Buttons
+- Mobile navigation
+
+Use the GDG-inspired color system without falsely claiming official Google/GDG affiliation.
+
+The project should remain clearly branded as:
+"Volunteer Hub"
+
+If a GDG logo/asset is already available in the project or provided by the organizers, use it appropriately.
+Do NOT invent or create an official GDG affiliation.
+
+5. LANDING / HOME PAGE
+Improve the existing home page visually.
+
+Create a strong hero section around the existing Volunteer Hub purpose.
+
+Use messaging such as:
+
+"Volunteer Hub"
+"Connect. Volunteer. Make an Impact."
+
+or a similar concise community-focused message.
+
+Keep all existing buttons and functionality working.
+
+Improve:
+- Hero layout
+- Call-to-action buttons
+- Community-focused visual elements
+- Feature cards
+- Section spacing
+- Background treatment
+- Responsive layout
+
+Do not add new functional features.
+
+6. AUTHENTICATION PAGES
+Redesign existing Login and Registration pages.
+
+Keep authentication functionality exactly the same.
+
+Improve:
+- Form layout
+- Input fields
+- Buttons
+- Error messages
+- Labels
+- Card design
+- Background
+- Typography
+- Responsive behavior
+
+Make the pages visually consistent with the main Volunteer Hub theme.
+
+7. USER DASHBOARD
+Keep all existing dashboard functionality.
+
+Only improve the UI:
+- Cards
+- Statistics presentation
+- Tables
+- Request cards
+- Status indicators
+- Buttons
+- Empty states
+- Loading states
+- Spacing
+- Typography
+
+Use the GDG-inspired colors for status indicators in a subtle and meaningful way.
+
+8. VOLUNTEER DASHBOARD
+Keep all existing volunteer functionality.
+
+Improve:
+- Profile presentation
+- Request cards
+- Application status
+- Skills display
+- Availability display
+- Action buttons
+- Dashboard layout
+- Responsive design
+
+Make the dashboard look professional and community-oriented.
+
+9. ADMIN DASHBOARD
+Do not change any admin functionality.
+
+Only redesign the existing UI:
+- Statistics cards
+- Charts
+- Tables
+- Navigation
+- User management screens
+- Volunteer management screens
+- Activity sections
+
+Use Blue, Green, Yellow, and Red as controlled data-visualization accents.
+
+10. REQUEST / APPLICATION UI
+Keep the existing request and application workflow exactly the same.
+
+Improve the visual presentation of:
+- Request cards
+- Request details
+- Application cards
+- Status badges
+- Approve/reject buttons
+- Empty states
+- Confirmation dialogs
+
+Make statuses visually obvious but accessible.
+
+11. COMPONENT CONSISTENCY
+Audit the entire frontend and make all existing components visually consistent.
+
+Standardize:
+- Buttons
+- Inputs
+- Selects
+- Cards
+- Dialogs
+- Badges
+- Tables
+- Alerts
+- Toasts
+- Navigation
+- Dropdowns
+
+Do not introduce unnecessary new component libraries.
+
+Reuse the project's existing UI component system where possible.
+
+12. RESPONSIVE DESIGN
+Make sure the entire existing website works beautifully on:
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Fix visual overflow, spacing issues, card wrapping, table responsiveness, and navigation issues if found.
+
+13. ANIMATIONS
+Use subtle animations only where they improve UX.
+
+If Framer Motion is already installed, reuse it.
+
+Examples:
+- Fade-in
+- Slide-up
+- Button hover
+- Card hover
+- Page transitions
+
+Do not make animations excessive or slow down the application.
+
+14. ACCESSIBILITY
+Maintain good:
+- Color contrast
+- Keyboard navigation
+- Visible focus states
+- Readable font sizes
+- Accessible button labels
+- Form labels
+
+15. IMPORTANT BRANDING RULE
+The provided PDF is a GDG Community Kit / Brand Guidelines reference.
+
+Use its visual language, typography direction, color palette, and design principles for the Volunteer Hub UI.
+
+Do not modify or misuse official Google/GDG trademarks.
+Do not claim that Volunteer Hub is officially operated by Google or GDG unless that information already exists and is authorized.
+
+16. CODE QUALITY
+Before making changes:
+- Inspect the existing frontend structure.
+- Identify the existing theme/configuration files.
+- Reuse existing components.
+- Avoid unnecessary rewrites.
+- Keep the current architecture intact.
+
+After making changes:
+- Run the project.
+- Check all existing routes/pages.
+- Check Login.
+- Check Registration.
+- Check User Dashboard.
+- Check Volunteer Dashboard.
+- Check Admin Dashboard.
+- Check Request pages.
+- Check Application pages.
+- Check responsive layouts.
+- Fix only UI-related errors caused by your changes.
+
+FINAL REQUIREMENT:
+This is a UI-only redesign.
+
+DO NOT:
+- Add Events module
+- Add Certificate module
+- Add Badge module
+- Add Leaderboard
+- Add Announcement module
+- Add new database tables
+- Add new APIs
+- Add new business logic
+- Change authentication
+- Change existing workflows
+
+The final result should feel like a polished hackathon-ready "Volunteer Hub" website with a GDG-inspired visual identity while preserving 100% of the existing functionality.

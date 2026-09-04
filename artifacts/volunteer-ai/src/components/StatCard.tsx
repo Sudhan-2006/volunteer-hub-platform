@@ -19,14 +19,14 @@ export function StatCard({ title, value, icon, accentClass = "text-primary", del
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
     >
-      <Card>
-        <CardContent className="p-6 flex items-center gap-4">
-          <div className={cn("p-3 rounded-full bg-muted/50", accentClass)}>
+      <Card className="surface-shadow border-border/80">
+        <CardContent className="flex items-center gap-3 p-4 sm:p-5">
+          <div className={cn("rounded-xl p-2.5", accentClass)}>
             {icon}
           </div>
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <AnimatedNumber value={value} className="text-2xl font-bold" />
+            <p className="label-mono text-muted-foreground">{title}</p>
+            <AnimatedNumber value={value} className="mt-1 text-2xl font-bold tracking-tight" />
           </div>
         </CardContent>
       </Card>

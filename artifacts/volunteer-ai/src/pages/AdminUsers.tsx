@@ -21,21 +21,20 @@ export default function AdminUsers() {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] items-center justify-center p-8">
+        <div className="h-10 w-10 animate-pulse rounded-xl bg-primary/15" />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Users</h1>
+        <span className="label-mono text-primary">directory / people asking</span><h1 className="mt-2 text-3xl font-bold tracking-tight">Users</h1>
         <p className="text-muted-foreground mt-1">Manage users who post requests.</p>
       </div>
 
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
-        <Table>
+      <div className="surface-shadow overflow-x-auto rounded-2xl border border-border/80 bg-card"><Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -48,7 +47,7 @@ export default function AdminUsers() {
           </TableHeader>
           <TableBody>
             {users?.map((user, i) => (
-              <motion.tr
+              <motion.tr data-testid={`row-user-${user.id}`}
                 key={user.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

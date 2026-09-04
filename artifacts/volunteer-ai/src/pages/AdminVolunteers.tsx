@@ -20,20 +20,20 @@ export default function AdminVolunteers() {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] items-center justify-center p-8">
+        <div className="h-10 w-10 animate-pulse rounded-xl bg-[#34A853]/15" />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Volunteers</h1>
+        <span className="label-mono text-[#21833E]">directory / people helping</span><h1 className="mt-2 text-3xl font-bold tracking-tight">Volunteers</h1>
         <p className="text-muted-foreground mt-1">Manage platform volunteers and their applications.</p>
       </div>
 
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+      <div className="surface-shadow overflow-x-auto rounded-2xl border border-border/80 bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -47,7 +47,7 @@ export default function AdminVolunteers() {
           </TableHeader>
           <TableBody>
             {volunteers?.map((vol, i) => (
-              <motion.tr
+              <motion.tr data-testid={`row-volunteer-${vol.id}`}
                 key={vol.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

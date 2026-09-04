@@ -26,8 +26,8 @@ export default function VolunteerRequestDetail({ id }: { id: number }) {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] items-center justify-center p-8">
+        <div className="h-10 w-10 animate-pulse rounded-xl bg-[#34A853]/15" />
       </div>
     );
   }
@@ -58,14 +58,14 @@ export default function VolunteerRequestDetail({ id }: { id: number }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl space-y-8">
+    <div className="mx-auto max-w-5xl space-y-9 px-4 py-8 sm:px-6 lg:py-10">
       <Link href="/dashboard/volunteer" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Dashboard
       </Link>
 
-      <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
-        <div className="bg-muted/30 p-6 md:p-8 border-b">
+      <div className="surface-shadow overflow-hidden rounded-2xl border border-border/80 bg-card">
+        <div className="border-b border-border/70 bg-[#34A853]/[.045] p-6 md:p-8">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <Badge variant="secondary">{request.category}</Badge>
             <Badge variant="outline" className={
@@ -97,7 +97,7 @@ export default function VolunteerRequestDetail({ id }: { id: number }) {
               <motion.section 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-6 rounded-xl bg-teal-50 border border-teal-200"
+                  className="rounded-xl border border-[#34A853]/25 bg-[#34A853]/[.08] p-6"
               >
                 <div className="flex items-center gap-2 mb-4 text-teal-800">
                   <CheckCircle2 className="w-6 h-6" />
@@ -175,7 +175,7 @@ export default function VolunteerRequestDetail({ id }: { id: number }) {
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700 text-white" disabled={applyToRequest.isPending}>
+                   <Button data-testid="button-submit-application" type="submit" className="w-full bg-[#34A853] text-white hover:bg-[#21833E]" disabled={applyToRequest.isPending}>
                     {applyToRequest.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
                     Submit Application
                   </Button>

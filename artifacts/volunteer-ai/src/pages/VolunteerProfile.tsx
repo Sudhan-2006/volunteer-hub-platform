@@ -103,15 +103,15 @@ export default function VolunteerProfile() {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] items-center justify-center p-8">
+        <div className="h-10 w-10 animate-pulse rounded-xl bg-[#34A853]/15" />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/dashboard/volunteer" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6">
+    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:py-10">
+      <Link href="/dashboard/volunteer" className="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Dashboard
       </Link>
@@ -121,7 +121,7 @@ export default function VolunteerProfile() {
         <p className="text-muted-foreground mt-2">Tell us about your skills and experience to help users trust you.</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-card p-6 sm:p-8 rounded-xl border shadow-sm">
+      <form onSubmit={handleSubmit(onSubmit)} className="surface-shadow space-y-8 rounded-2xl border border-border/80 bg-card p-6 sm:p-8">
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="roleTitle">Primary Role</Label>
@@ -205,7 +205,7 @@ export default function VolunteerProfile() {
           <Link href="/dashboard/volunteer">
             <Button type="button" variant="outline">Cancel</Button>
           </Link>
-          <Button type="submit" className="bg-teal-600 hover:bg-teal-700 text-white min-w-[150px]" disabled={updateProfile.isPending}>
+           <Button type="submit" className="min-w-[150px] bg-[#34A853] text-white hover:bg-[#21833E]" disabled={updateProfile.isPending}>
             {updateProfile.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             Save Profile
           </Button>

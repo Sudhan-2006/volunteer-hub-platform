@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { useLogin, getGetMeQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -43,29 +42,29 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-background">
-      <div className="hidden lg:block relative overflow-hidden bg-muted">
+    <div className="grid min-h-[100dvh] bg-background lg:grid-cols-[.9fr_1.1fr]">
+      <div className="relative hidden overflow-hidden bg-[#1E1E1E] lg:block">
         <img 
           src={authBrandImg} 
           alt="Brand" 
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center p-12">
-          <div className="text-white max-w-lg">
-            <h1 className="text-4xl font-bold mb-4">Welcome back to Volunteer AI</h1>
-            <p className="text-lg opacity-90">Continue your journey in making a difference in the community.</p>
+        <div className="absolute inset-0 bg-[#1E1E1E]/55 flex items-end p-12">
+          <div className="max-w-lg text-white">
+            <span className="label-mono text-[#A9C7FF]">Volunteer Hub</span><h1 className="mb-4 mt-3 text-4xl font-bold tracking-tight">Good work starts with showing up.</h1>
+            <p className="text-lg text-white/75">Continue your journey of making a difference, one neighbor at a time.</p>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-center p-8">
+      <div className="flex items-center justify-center px-5 py-10 sm:p-10">
         <div className="w-full max-w-md space-y-8">
           <div>
-            <Link href="/" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-8">
+            <Link href="/" data-testid="link-back-home" className="mb-10 inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to home
             </Link>
-            <h2 className="text-3xl font-bold tracking-tight">Sign in</h2>
+            <span className="label-mono text-primary">welcome back</span><h2 className="mt-3 text-3xl font-bold tracking-tight">Sign in to Volunteer Hub</h2>
             <p className="text-muted-foreground mt-2">
               Don't have an account?{" "}
               <Link href="/register" className="text-primary hover:underline">
@@ -74,11 +73,11 @@ export default function Login() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <Card className="surface-shadow mt-8 border-border/80 p-6 sm:p-8"><form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input
+                  <Input data-testid="input-email" aria-invalid={!!errors.email}
                   id="email"
                   type="email"
                   placeholder="name@example.com"
@@ -93,7 +92,7 @@ export default function Login() {
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input
+                  <Input data-testid="input-password" aria-invalid={!!errors.password}
                   id="password"
                   type="password"
                   {...register("password")}
@@ -105,15 +104,15 @@ export default function Login() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-12 text-lg" disabled={login.isPending}>
+            <Button data-testid="button-submit-login" type="submit" className="h-12 w-full text-base" disabled={login.isPending}>
               {login.isPending ? (
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               ) : null}
               Sign In
             </Button>
-          </form>
+          </form></Card>
 
-          <Card className="p-4 bg-muted/50 border-dashed">
+          <Card className="mt-4 border-dashed bg-muted/40 p-4">
             <p className="text-sm text-center text-muted-foreground">
               <span className="font-semibold">Admin demo:</span> admin@volunteerai.app / admin123
             </p>

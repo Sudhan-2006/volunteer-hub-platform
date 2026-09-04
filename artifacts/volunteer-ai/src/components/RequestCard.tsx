@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Users, Activity } from "lucide-react";
+import { MapPin, Users, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Urgency, RequestStatus } from "@workspace/api-client-react";
 import { ReactNode } from "react";
@@ -33,23 +33,24 @@ export function RequestCard({
   delay = 0,
 }: RequestCardProps) {
   const urgencyColors = {
-    low: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-    medium: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-    high: "bg-rose-500/10 text-rose-600 border-rose-500/20",
+    low: "bg-[#34A853]/10 text-[#21833E] border-[#34A853]/25",
+    medium: "bg-[#F9AB00]/12 text-[#946300] border-[#F9AB00]/25",
+    high: "bg-[#EA4335]/10 text-[#B52D25] border-[#EA4335]/25",
   };
 
   const statusColors = {
-    open: "bg-blue-500/10 text-blue-600",
-    in_progress: "bg-purple-500/10 text-purple-600",
-    completed: "bg-emerald-500/10 text-emerald-600",
-    cancelled: "bg-gray-500/10 text-gray-600",
+    open: "bg-[#4285F4]/10 text-[#2563C4]",
+    in_progress: "bg-[#F9AB00]/12 text-[#946300]",
+    completed: "bg-[#34A853]/10 text-[#21833E]",
+    cancelled: "bg-muted text-muted-foreground",
   };
 
   const Content = (
-    <Card className="h-full flex flex-col hover:shadow-md transition-shadow group">
-      <CardContent className="p-5 flex-1">
+    <Card className="surface-shadow h-full flex flex-col overflow-hidden border-border/80 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+      <CardContent className="flex-1 p-5">
+        <div className="mb-5 flex items-center justify-between"><span className="label-mono text-muted-foreground">request / {String(id).padStart(3, "0")}</span><ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></div>
         <div className="flex justify-between items-start mb-3 gap-2">
-          <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">
+           <h3 className="line-clamp-2 text-[17px] font-semibold leading-snug group-hover:text-primary transition-colors">
             {title}
           </h3>
           <Badge variant="outline" className={cn("shrink-0", urgencyColors[urgency])}>
@@ -57,14 +58,14 @@ export function RequestCard({
           </Badge>
         </div>
         <div className="flex flex-wrap gap-2 mb-4">
-          <Badge variant="secondary" className="bg-muted">
+             <Badge variant="secondary" className="bg-muted/80 text-muted-foreground">
             {category}
           </Badge>
           <Badge variant="secondary" className={cn("capitalize", statusColors[status])}>
             {status.replace("_", " ")}
           </Badge>
         </div>
-        <div className="space-y-2 text-sm text-muted-foreground mt-auto">
+           <div className="mt-6 space-y-2.5 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 shrink-0" />
             <span className="truncate">{cityArea}</span>

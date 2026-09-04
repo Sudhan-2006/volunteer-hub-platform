@@ -24,8 +24,8 @@ export default function UserDashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-8 flex justify-center items-center h-[50vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="mx-auto flex min-h-[50vh] max-w-6xl items-center justify-center p-8">
+        <div className="space-y-3 text-center"><div className="mx-auto h-10 w-10 animate-pulse rounded-xl bg-primary/15" /><p className="label-mono text-muted-foreground">loading your hub</p></div>
       </div>
     );
   }
@@ -46,30 +46,30 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl space-y-8">
+    <div className="mx-auto max-w-6xl space-y-9 px-4 py-8 sm:px-6 lg:py-10">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">My Dashboard</h1>
+          <span className="label-mono text-primary">member space</span><h1 className="mt-2 text-3xl font-bold tracking-tight">Your neighborhood hub</h1>
           <p className="text-muted-foreground mt-1">Manage your requests and volunteer applications.</p>
         </div>
-        <Link href="/dashboard/user/new">
-          <Button className="gap-2 bg-amber-600 hover:bg-amber-700 text-white">
+          <Link href="/dashboard/user/new" data-testid="link-post-request">
+          <Button className="gap-2 bg-[#F9AB00] text-[#1E1E1E] hover:bg-[#F9AB00]/90">
             <Plus className="w-4 h-4" /> Post Request
           </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <StatCard title="Total Requests" value={dashboard.counts.total} icon={<FileText className="w-5 h-5" />} accentClass="text-amber-600 bg-amber-500/10" delay={0} />
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+        <StatCard title="Total Requests" value={dashboard.counts.total} icon={<FileText className="w-5 h-5" />} accentClass="text-[#946300] bg-[#F9AB00]/12" delay={0} />
         <StatCard title="Applications" value={dashboard.counts.applied} icon={<Inbox className="w-5 h-5" />} accentClass="text-blue-600 bg-blue-500/10" delay={0.1} />
-        <StatCard title="Pending" value={dashboard.counts.pending} icon={<Clock className="w-5 h-5" />} accentClass="text-purple-600 bg-purple-500/10" delay={0.2} />
+        <StatCard title="Pending" value={dashboard.counts.pending} icon={<Clock className="w-5 h-5" />} accentClass="text-[#946300] bg-[#F9AB00]/12" delay={0.2} />
         <StatCard title="Accepted" value={dashboard.counts.accepted} icon={<CheckCircle2 className="w-5 h-5" />} accentClass="text-emerald-600 bg-emerald-500/10" delay={0.3} />
-        <StatCard title="Rejected" value={dashboard.counts.rejected} icon={<XCircle className="w-5 h-5" />} accentClass="text-rose-600 bg-rose-500/10" delay={0.4} />
+        <StatCard title="Rejected" value={dashboard.counts.rejected} icon={<XCircle className="w-5 h-5" />} accentClass="text-[#B52D25] bg-[#EA4335]/10" delay={0.4} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <h2 className="text-2xl font-semibold tracking-tight">My Requests</h2>
+           <div><span className="label-mono text-muted-foreground">your activity</span><h2 className="mt-1 text-xl font-semibold tracking-tight">My requests</h2></div>
           {dashboard.recentRequests.length === 0 ? (
             <EmptyState 
               icon={<FileText className="w-8 h-8" />}
@@ -96,7 +96,7 @@ export default function UserDashboard() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold tracking-tight">Recent Applications</h2>
+           <div><span className="label-mono text-muted-foreground">incoming support</span><h2 className="mt-1 text-xl font-semibold tracking-tight">Recent applications</h2></div>
           {dashboard.recentApplications.length === 0 ? (
             <EmptyState 
               icon={<Inbox className="w-8 h-8" />}
@@ -112,17 +112,17 @@ export default function UserDashboard() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <Card>
+                  <Card className="surface-shadow border-border/80">
                     <CardContent className="p-4 space-y-3">
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-medium">{app.volunteer.name}</p>
                           <p className="text-sm text-muted-foreground">{app.volunteer.roleTitle}</p>
                         </div>
-                        <Badge variant="outline" className={
-                          app.status === 'pending' ? 'bg-amber-500/10 text-amber-600' :
-                          app.status === 'approved' ? 'bg-emerald-500/10 text-emerald-600' :
-                          'bg-rose-500/10 text-rose-600'
+                          <Badge data-testid={`status-application-${app.id}`} variant="outline" className={
+                           app.status === 'pending' ? 'bg-[#F9AB00]/12 text-[#946300]' :
+                           app.status === 'approved' ? 'bg-[#34A853]/10 text-[#21833E]' :
+                           'bg-[#EA4335]/10 text-[#B52D25]'
                         }>
                           {app.status}
                         </Badge>
@@ -139,7 +139,7 @@ export default function UserDashboard() {
                           <Button 
                             size="sm" 
                             className="flex-1 bg-emerald-600 hover:bg-emerald-700"
-                            onClick={() => handleDecision(app.id, app.requestId, "approved")}
+                            data-testid={`button-approve-application-${app.id}`} onClick={() => handleDecision(app.id, app.requestId, "approved")}
                             disabled={decideApplication.isPending}
                           >
                             Approve
@@ -147,8 +147,8 @@ export default function UserDashboard() {
                           <Button 
                             size="sm" 
                             variant="outline" 
-                            className="flex-1 text-rose-600 hover:bg-rose-50"
-                            onClick={() => handleDecision(app.id, app.requestId, "rejected")}
+                            className="flex-1 text-[#B52D25] hover:bg-[#EA4335]/10"
+                            data-testid={`button-reject-application-${app.id}`} onClick={() => handleDecision(app.id, app.requestId, "rejected")}
                             disabled={decideApplication.isPending}
                           >
                             Reject

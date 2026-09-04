@@ -13,12 +13,12 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="flex flex-col items-center justify-center p-12 text-center border rounded-xl border-dashed bg-muted/20"
+       className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-primary/20 bg-primary/[.025] p-10 text-center"
     >
-      <div className="p-4 rounded-full bg-muted/50 mb-4 text-muted-foreground">
+       <div className="mb-4 rounded-2xl bg-primary/10 p-4 text-primary">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+       <h3 className="mb-2 text-lg font-semibold">{title}</h3>
       <p className="text-muted-foreground max-w-sm mb-6">{description}</p>
       {action}
     </motion.div>

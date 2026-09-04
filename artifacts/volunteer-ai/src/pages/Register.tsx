@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { useRegister, getGetMeQueryKey, RegisterBodyRole } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -50,14 +48,14 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
-      <div className="w-full max-w-md space-y-8 bg-background p-8 rounded-3xl shadow-xl border">
+    <div className="page-grid flex min-h-[100dvh] items-center justify-center bg-background p-4">
+      <div className="surface-shadow w-full max-w-lg space-y-8 rounded-2xl border border-border/80 bg-card p-6 sm:p-9">
         <div>
-          <Link href="/" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6">
+          <Link href="/" data-testid="link-register-back" className="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to home
           </Link>
-          <h2 className="text-3xl font-bold tracking-tight">Create an account</h2>
+          <span className="label-mono text-primary">join the network</span><h2 className="mt-3 text-3xl font-bold tracking-tight">Create your Volunteer Hub account</h2>
           <p className="text-muted-foreground mt-2">
             Already have an account?{" "}
             <Link href="/login" className="text-primary hover:underline">
@@ -70,13 +68,13 @@ export default function Register() {
           <div className="space-y-4">
             <Label>I want to...</Label>
             <div className="grid grid-cols-2 gap-4">
-              <button
+              <button data-testid="button-role-user"
                 type="button"
                 onClick={() => setValue("role", RegisterBodyRole.user)}
                 className={cn(
                   "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all",
                   selectedRole === RegisterBodyRole.user 
-                    ? "border-amber-500 bg-amber-500/10 text-amber-700" 
+                    ? "border-[#F9AB00] bg-[#F9AB00]/10 text-[#946300]" 
                     : "border-border hover:border-muted-foreground/30 text-muted-foreground"
                 )}
               >
@@ -84,13 +82,13 @@ export default function Register() {
                 <span className="font-semibold">Get Help</span>
               </button>
               
-              <button
+              <button data-testid="button-role-volunteer"
                 type="button"
                 onClick={() => setValue("role", RegisterBodyRole.volunteer)}
                 className={cn(
                   "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all",
                   selectedRole === RegisterBodyRole.volunteer 
-                    ? "border-teal-500 bg-teal-500/10 text-teal-700" 
+                    ? "border-[#34A853] bg-[#34A853]/10 text-[#21833E]" 
                     : "border-border hover:border-muted-foreground/30 text-muted-foreground"
                 )}
               >
@@ -104,7 +102,7 @@ export default function Register() {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input
+                <Input data-testid="input-register-name"
                 id="name"
                 {...register("name")}
                 className={errors.name ? "border-destructive" : ""}
@@ -116,7 +114,7 @@ export default function Register() {
 
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
+                <Input data-testid="input-register-email"
                 id="email"
                 type="email"
                 {...register("email")}
@@ -129,7 +127,7 @@ export default function Register() {
 
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input
+                <Input data-testid="input-register-password"
                 id="password"
                 type="password"
                 {...register("password")}
@@ -141,7 +139,7 @@ export default function Register() {
             </div>
           </div>
 
-          <Button type="submit" className="w-full h-12 text-lg" disabled={registerMutation.isPending}>
+          <Button data-testid="button-submit-register" type="submit" className="h-12 w-full text-base" disabled={registerMutation.isPending}>
             {registerMutation.isPending ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             ) : null}
