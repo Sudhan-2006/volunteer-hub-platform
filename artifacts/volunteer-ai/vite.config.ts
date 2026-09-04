@@ -59,14 +59,23 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
-    port,
-    strictPort: true,
-    host: "0.0.0.0",
-    allowedHosts: true,
-    fs: {
-      strict: true,
-    },
+  port,
+  strictPort: true,
+  host: "0.0.0.0",
+  allowedHosts: true,
+  proxy:
+    process.env.REPL_ID === undefined
+      ? {
+          "/api": {
+            target: "http://localhost:3001",
+            changeOrigin: true,
+          },
+        }
+      : undefined,
+  fs: {
+    strict: true,
   },
+},
   preview: {
     port,
     host: "0.0.0.0",
